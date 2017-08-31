@@ -1,8 +1,6 @@
 // Gulp.js configuration
 'use strict';
 
-// cd 'Google Drive'/Wordpress/'Child Themes'/LMG
-
 
 /*
 ** SETTINGS
@@ -10,12 +8,11 @@
 
 
 
-//global settings to change for each theme
 const
 
-    themeName           = 'LMG-Recording-Child',
-    MAMPDirectoryName   = 'Zhao EPK',
-    FTPDirectoryPath    = `/httpdocs/wp-content/themes/${themeName}/`
+    themeName           = 'theme-name',
+    MAMPDirectoryName   = 'name-of-mamp-directory-folder',
+    FTPDirectoryPath    = `for example.... /httpdocs/wp-content/themes/${themeName}/`
 ;
 
 
@@ -25,7 +22,7 @@ var
     dir = {
         src             : 'src/',
         build           : 'build/',
-        home            : process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE, //users/mattwills
+        home            : process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE, //users/yourname
         localhostThemeRoot :  `/Applications/MAMP/htdocs/${MAMPDirectoryName}/wp-content/themes/${themeName}/`
     }
     dir.root = dir.build + '../';
@@ -122,16 +119,16 @@ const zipOpts = {
 // FTP settings
 const FTP = {
     connOpts : {
-        host        : 'ftp.lovemusicgroup.co.uk',
-        user        : 'matt_lmg',
-        password    : 'lawford1',
+        host        : 'ftp.example.co.uk',
+        user        : 'example',
+        password    : 'password',
         parallel    : 10,
         log         : gutil.log
     },
     directoryPath       : FTPDirectoryPath,
     src                 : dir.build + '**/*',
     base                : dir.build,
-    serverTzDifference  : 5
+    serverTzDifference  : 0
 };
 
  
@@ -362,24 +359,3 @@ gulp.task('commit', gulpSequence('build',['ftp','zip']));
 
 // default task - builds everything, initiates local server and watches with browsersync active
 gulp.task('default', gulpSequence('build', 'browsersync'));
-
-
-
-
-
-
-/*
-** HELPER FUNCTIONS
-*/
-
-gulp.task('log', () => {
-    
-    getMtimeMs(dir.build + 'functions.php', (mtimeMs) => {
-        
-        var mtime = new Date(mtimeMs);
-        
-        gutil.log(mtime.toString());
-        
-    });
-    
-});
